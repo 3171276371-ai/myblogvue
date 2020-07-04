@@ -90,13 +90,13 @@
 			</el-col>
 		</el-row>
 	</div>
-	<div class="headImgBox" :style="{backgroundImage:this.$store.state.themeObj.top_image?'url('+this.$store.state.themeObj.top_image+')':'url(static/img/headbg05.jpg)'}">
-		<div class="scene">
-			<div><span id="luke"></span></div>
-		</div>
+	<div class="headImgBox" :style="{backgroundImage:this.$store.state.themeObj.top_image?'url('+this.$store.state.themeObj.top_image+')':'url(static/img/headtou.jpg)'}">
+		 <div class="scene">
+		  	<div><span id="luke"> </span></div>
+		  </div>	
 		<div class="h-information">
 			<a href="#/Aboutme">
-                    <img :src="this.$store.state.themeObj.head_portrait?this.$store.state.themeObj.head_portrait:'static/img/tou.png'" alt="">
+                    <img :src="this.$store.state.themeObj.head_portrait?this.$store.state.themeObj.head_portrait:'static/img/beijin.png'" alt="">
                 </a>
 			<h2 class="h-description">
                     <a href="#/Aboutme">
@@ -119,6 +119,7 @@ import {
 	Typeit
 } from '../utils/plug.js'
 export default {
+	 	
 	data() { //选项 / 数据
 		return {
 			userInfo: '', //用户信息
@@ -129,7 +130,7 @@ export default {
 			pMenu: true, //手机端菜单打开
 			// path:'',//当前打开页面的路径
 			input: '', //input输入内容
-			headBg: 'url(static/img/headbg05.jpg)', //头部背景图
+			headBg: 'url(static/img/headtou.jpg)', //头部背景图
 			headTou: '', //头像
 			projectList: '' //项目列表
 		}
@@ -186,10 +187,12 @@ export default {
 				type: 'warning'
 			}).then(() => {
 				// console.log(that.$route.path);
-				LoginOut(localStorage.getItem('accessToken'), function(result) {
+				LoginOut(function(result) {
 					//    console.log(result);
 					if (localStorage.getItem('userInfo')) {
 						localStorage.removeItem('userInfo');
+						localStorage.removeItem('token');
+						that.$cookie.delete('token',-1); 
 						that.haslogin = false;
 						//    that.$router.replace({path:that.$route.fullPath});
 						window.location.reload();
@@ -285,7 +288,7 @@ export default {
 		// console.log('是否是慧慧',this.$store.state.themeObj.user_start);
 		var that = this;
 		var timer = setTimeout(function() {
-			Typeit(that.$store.state.themeObj.user_start, "#luke"); //打字机效果
+			Typeit("HELLO CXT", "#luke"); //打字机效果
 			clearTimeout(timer);
 		}, 500);
 	}

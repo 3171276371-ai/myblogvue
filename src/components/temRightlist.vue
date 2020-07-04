@@ -3,9 +3,9 @@
     <div class="rightlistBox">
         <section >
             <div class="r1-head">
-                <img :src="this.$store.state.themeObj.center_smailimg?this.$store.state.themeObj.center_smailimg:'static/img/headtou02.jpg'" alt="">
+                <img :src="this.$store.state.themeObj.center_smailimg?this.$store.state.themeObj.center_smailimg:'static/img/头像.jpg'" alt="">
                 <h1 v-if="this.$store.state.themeObj.user_start!=0">
-                    <span>女王</span>Aimee
+                    <span>男神</span>陈啸掭
                 </h1>
             </div>
             <div class="r1-body">
@@ -18,9 +18,7 @@
                         <el-tooltip class="item" effect="dark" content="QQ" placement="top">
                             <a  :href="catchMeObj[isAimee].qq" target="_blank"><i class="fa fa-fw fa-qq"></i></a>
                         </el-tooltip>
-                        <el-tooltip class="item" effect="dark" content="微博" placement="top">
-                            <a :href="catchMeObj[isAimee].sina" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
-                        </el-tooltip>
+                    
                     </div>
                     <div class="">
                         <el-tooltip class="item" effect="dark" content="微信" placement="top">
@@ -29,9 +27,7 @@
                         <el-tooltip class="item" effect="dark" content="CSDN" placement="top">
                             <a :href="catchMeObj[isAimee].csdn" target="_blank"><i class="">C</i></a>
                         </el-tooltip>
-                        <el-tooltip class="item" effect="dark" content="简历" placement="top">
-                            <a :href="catchMeObj[isAimee].job" target="_blank"><i class="fa fa-fw fa-file-word-o"></i></a>
-                        </el-tooltip>
+                      
                         <el-tooltip class="item" effect="dark" content="更多" placement="top">
                             <a href="#/Aboutme" ><i class="el-icon-more"></i></a>
                         </el-tooltip>
@@ -102,21 +98,11 @@ import {ShowBrowseCount,ShowArtCommentCount,showLikeData,GetLike} from '../utils
                 likeNum:0,//do you like me 点击量
                 initLikeNum:0,//初始化喜欢数量
                 catchMeObj:{//抓住我 个人信息
-                    Qinlh:{
-                        git:'https://gitee.com/qinlh',
-                        qq: 'static/img/qinlh/qq.jpg',
-                        sina: 'https://weibo.com/u/2313631533',
-                        wechat: 'static/img/qinlh/wechat.jpg',
-                        csdn: 'http://www.qinlinhui.cn',
-                        job: 'http://qinlh.mangoya.cn/MyResume/'
-                    },
                     Aimee:{
-                        git: 'https://github.com/Aimee1608',
-                        qq: 'static/img/aimee/QQ.jpg',
-                        sina: 'https://weibo.com/u/2242812941',
-                        wechat: 'static/img/aimee/erwm.jpg',
-                        csdn: 'http://blog.csdn.net/Aimee1608',
-                        job: 'http://aimee.mangoya.cn'
+                        git: 'https://github.com/3171276371-ai',
+                        qq: 'static/img/aimee/qq.png',
+                        wechat: 'static/img/aimee/QQ20200701-202446.png',
+                        csdn: 'https://blog.csdn.net/weixin_44024346'
                     }
                 },
                 isAimee:this.$store.state.themeObj.user_start!=0?"Aimee":"Qinlh"//判断是哪个的博客

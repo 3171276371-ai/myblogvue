@@ -3,7 +3,7 @@
     <div>
         <div class="container">
             <h1 class="loginTitle">
-                <a href="#/">{{this.$store.state.themeObj.user_start!=0?"Aimee 的博客":"Qinlh 的博客"}}</a>
+                <a href="#/">陈啸掭的博客</a>
             </h1>
             <!-- 登录注册 -->
             <div v-show="!err2005" class="">
@@ -21,13 +21,13 @@
                         show-icon  :closable="false">
                     </el-alert>
                     <el-input
-                        type="email"
-                        placeholder="邮箱"
-                        v-model="email">
+                        type="username"
+                        placeholder="用户名"
+                        v-model="username">
                     </el-input>
                     <el-alert
-                        v-show="emailErr"
-                        title="请输入邮箱"
+                        v-show="usernameErr"
+                        title="请输入用户名"
                         type="error"
                         show-icon  :closable="false">
                     </el-alert>
@@ -62,30 +62,31 @@
                         v-show="registerErr"
                         :title="registerTitle"
                         type="error"
-                        show-icon  :closable="false">
+                        show-icon  :closable="true">
                     </el-alert>
                     <el-input
                         type="text"
-                        placeholder="用户名"
+                        placeholder="用户名6-12位"
                         v-model="nusername">
                     </el-input>
                     <el-alert
                         v-show="nusernameErr"
                         title="用户名错误"
                         type="error"
-                        show-icon  :closable="false">
+                        show-icon  :closable="true">
                     </el-alert>
-                    <el-input
-                        type="email"
-                        placeholder="邮箱"
-                        v-model="nemail">
+                      <el-input
+                        type="text"
+                        placeholder="姓名"
+                        v-model="name">
                     </el-input>
                     <el-alert
-                        v-show="nemailErr"
-                        title="邮箱错误"
+                        v-show="nameErr"
+                        title="姓名错误"
                         type="error"
-                        show-icon  :closable="false">
+                        show-icon  :closable="true">
                     </el-alert>
+                          
                     <el-input
                           type="password"
                           placeholder="密码:6-12位英文、数字、下划线"
@@ -95,7 +96,7 @@
                         v-show="npasswordErr"
                         title="密码错误"
                         type="error"
-                        show-icon  :closable="false">
+                        show-icon  :closable="true">
                     </el-alert>
                     <el-input
                             type="password"
@@ -107,63 +108,41 @@
                         v-show="npassword2Err"
                         title="重复密码有误"
                         type="error"
-                        show-icon  :closable="false">
+                        show-icon  :closable="true">
                     </el-alert>
                     <div class="lr-btn tcolors-bg" @click="newRegister" v-loading.fullscreen.lock="fullscreenLoading"  element-loading-text="提交中">注册</div>
                 </div>
             </div>
-            <!-- 注册进度状态 -->
-            <div v-show="err2005" class="registerSuc">
-                <div class="sucIcon">
-                    <el-steps :space="100" :active="step" finish-status="success">
-                      <el-step title="注册"></el-step>
-                      <el-step title="验证"></el-step>
-                      <el-step title="登录"></el-step>
-                    </el-steps>
-                </div>
-                <div v-show="urlstate==0" class="sucContent">
-                    账号激活链接已发送至您的邮箱：{{nemail}}
-                    <p>请您在24小时内登录邮箱，按邮件中的提示完成账号激活操作</p>
-                </div>
-                <div v-show="urlstate=='urlInvalid'" class="sucContent">
-                    账号已激活，现在去登录 &nbsp;&nbsp;<span class="tcolors-bg lastbtn" @click="goLogin">登录</span>
-                </div>
-                <div v-show="urlstate=='urlErr'" class="sucContent">
-                    OwO邮箱激活地址已超时，验证失败，请重新注册 &nbsp;&nbsp;<span class="tcolors-bg lastbtn" @click="goRegister">注册</span>
-                </div>
-            </div>
+         
         </div>
     </div>
 </template>
 
 <script>
 import {getRegister,UserLogin} from '../utils/server.js'
-    export default {
-        name: 'Login',
+    export default { 
+        name: 'Login', 
         data() { //选项 / 数据
             return {
-                username: '',//用户名
-                email: '',//邮箱
+                name:'',
+                username: '',//用户名 
                 password: '',//密码
-                nusername: '',//新用户注册名
-                nemail: '',//新用户注册邮箱
+                nusername: '',//新用户注册名 
                 npassword: '',//新用户注册密码
                 npassword2: '',//新用户注册重复密码
-                login: 0,//是否已经登录
-                emailErr: false,//登录邮箱错误
+                login: 0,//是否已经登录 
+                usernameErr: false,
                 passwordErr: false,//的轮毂密码错误
                 loginErr: false,//登录错误
+                nameErr:false,
                 loginTitle:'用户名或密码错误',
-                nusernameErr:false,//新用户注册用户名错误
-                nemailErr: false,//新用户注册邮箱错误
+                nusernameErr:false,//新用户注册用户名错误 
                 npasswordErr: false,//新用户注册密码错误
                 npassword2Err: false,//新用户注册重复密码错误
-                registerErr: false,//已注册错误
-                registerTitle: '该邮箱已注册',
-                err2005: false,//是否展示注册进度条状态
-                step: 1,//注册进度
+                registerErr: false,//已注册错误   
                 fullscreenLoading: false,//全屏loading
                 urlstate: 0,//重新注册
+                registerTitle:''
             }
         },
         methods: { //事件处理器
@@ -192,40 +171,30 @@ import {getRegister,UserLogin} from '../utils/server.js'
             },
             gotoHome:function(){//用户登录
                 var that = this;
-                var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ ;
-                var preg = /^(\w){6,12}$/;
-                if(reg.test(that.email)){
-                    that.emailErr = false;
+                var preg =  /^[\\u4e00-\\u9fa5_a-zA-Z0-9-]{1,16}$/;
+                if(preg.test(that.username)){
+                    that.usernameErr = false;
                 }else{
-                    that.emailErr = true;
+                    that.usernameErr = true;
                 }
                 if(that.password&&preg.test(that.password)){
                     that.passwordErr = false;
                 }else{
                     that.passwordErr = true;
                 }
-                if(!that.emailErr&&!that.passwordErr){
-                    UserLogin(that.email,that.password,function(msg){
+                if(!that.usernameErr&&!that.passwordErr){
+                    UserLogin(that.username,that.password,function(msg){
                         // console.log(msg);
-                        if(msg.code==1010){//登录成功
+                        if(msg.code==200){//登录成功
                              localStorage.setItem('userInfo',JSON.stringify(msg.data));
-                             localStorage.setItem('accessToken',msg.token);
+                             localStorage.setItem('token',msg.data.token);  
+                            that.$cookie.set('token', msg.data.token, 1); 
                              if(localStorage.getItem('logUrl')){
                                  that.$router.push({path:localStorage.getItem('logUrl')});
                              }else{
                                  that.$router.push({path:'/'});
                              }
 
-                        }else if(msg.code==2008||msg.code==2007){//邮箱或密码错误
-                            that.loginErr = true;
-                            that.loginTitle = '邮箱或密码错误';
-                        }else if(msg.code==2009){//邮箱注册码未激活
-                            that.loginErr = true;
-                            that.loginTitle = '该邮箱注册码未激活，请前往邮箱激活';
-                        }else if(msg.code==2005){//邮箱注册码未激活已超时
-                            // that.loginErr = true;
-                            that.err2005 = true;
-                            // that.loginTitle = '该邮箱激活地址已超时，已发送新链接，请前往邮箱激活';
                         }else{
                             that.loginErr = true;
                             that.loginTitle = '登录失败';
@@ -241,55 +210,39 @@ import {getRegister,UserLogin} from '../utils/server.js'
                 }
             },
             newRegister:function(){//注册提交
-                var that = this;
-                var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ ;
-                var preg = /^(\w){6,12}$/;
-                if(that.nusername){
-                    that.nusernameErr = false;
+                var that = this; 
+                var preg = /^[\\u4e00-\\u9fa5_a-zA-Z0-9-]{1,16}$/;
+                if(preg.test(that.nusername)){
+                    that.nusernameErr = false; 
                 }else{
-                    that.nusernameErr = true;
-                }
-                if(reg.test(that.nemail)){
-                    that.nemailErr = false;
-                }else{
-                    that.nemailErr = true;
-                }
+                    that.nusernameErr = true; 
+                  
+                } 
                 if(that.npassword&&preg.test(that.npassword)){
                     that.npasswordErr = false;
                     if(that.npassword==that.npassword2){
                         that.npassword2Err = false;
                     }else{
-                        that.npassword2Err = true;
+                        that.npassword2Err = true; 
                     }
                 }else{
-                    that.npasswordErr = true;
+                    that.npasswordErr = true; 
                 }
-                if(!that.nusernameErr&&!that.nemailErr&&!that.npasswordErr){
+                if(!that.nusernameErr&&!that.npasswordErr){
                     that.fullscreenLoading = true;
-                    getRegister(that.nusername,that.npassword,that.nemail,function(msg){
-                        if(msg.code==1010){//注册成功
-                            var timer = setTimeout(function(){//注册中
-                                that.fullscreenLoading = false;
-                                that.err2005 = true;
-                                that.step = 1;
-                                clearTimeout(timer);
-                            },3000)
-                        }else if(msg.code==2002){//该邮箱已注册
+                    getRegister(that.nusername,that.name,that.npassword,function(msg){
+                        if(msg.code==200){//注册成功 
+                            alert("注册成功请登录")
+                            that.$router.push({path:'/Login?login=1'});
+                        }else {//该邮箱已注册
                             that.fullscreenLoading = false;
                             that.registerErr = true;
-                            that.registerTitle = '该邮箱已注册,可直接登录';
-                        }else{
-                            that.fullscreenLoading = false;
-                            that.registerErr = true;
-                            that.registerTitle = '注册失败';
+                            that.registerTitle = '该用户名已注册,可直接登录';
                         }
                     })
                 }
             },
-            goLogin:function(){//邮箱验证成功,去登陆
-                this.err2005 = false;
-                this.$router.push({path:'/Login?login=1'});
-            },
+       
             goRegister: function(){//去注册
                 this.err2005 = false;
                 this.$router.push({path:'/Login?login=0'});

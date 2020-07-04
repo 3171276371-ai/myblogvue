@@ -7,13 +7,14 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import './assets/css/style.less'
 import store from './store'
-
+import cookie from 'vue-cookie' 
+Vue.prototype.$cookie = cookie;
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: '#app', 
   router,
   components: { App },
   template: '<App/>',

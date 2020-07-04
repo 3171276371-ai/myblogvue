@@ -18,8 +18,9 @@
             </span>
             <header>
                 <h1>
-                    <a :href="'#/DetailShare?aid='+item.id" target="_blank">
-                        {{item.title}}
+                    <a :href="'#/DetailShare?aid='+item.id" target="_blank"> 
+
+                           {{item.title}}
                     </a>
                 </h1>
                 <h2>
