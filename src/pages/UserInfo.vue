@@ -104,8 +104,7 @@ import {getUserInfo,UserInfoSave} from '../utils/server.js'//获取用户信息�
                     "萌萌哒",
                     "技术宅",
                     "忠实粉"
-                ],
-                wwwHost:"http://"+window.location.host,//图片域名
+                ], 
             }
         },
         methods: { //事件处理

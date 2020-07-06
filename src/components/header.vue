@@ -10,14 +10,13 @@
 						<el-menu-item index="/Home"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
 						<el-submenu index="/Share">
 							<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
-							<el-menu-item v-for="(item,index) in classListObj" :key="'class1'+index" :index="'/Share?classId='+item.class_id">{{item.cate_name}}</el-menu-item>
+							<el-menu-item v-for="(item,index) in classListObj" :key="'class1'+index" :index="'/Share?classId='+item.id">{{item.name}}</el-menu-item>
 						</el-submenu>
 						<el-submenu index="/Aboutme">
 							<template slot="title"><i class="fa fa-wa fa-flask"></i> 实验室</template>
 							<el-menu-item v-for="(item,index) in projectList" :key="'class2'+index" index=""><a :href="item.nav_url" target="_blank">{{item.nav_name}}</a></el-menu-item>
 						</el-submenu>
-						<el-menu-item index="/Reward"><i class="fa fa-wa fa-cny"></i> 赞赏</el-menu-item>
-						<el-menu-item index="/Friendslink"><i class="fa fa-wa fa-users"></i> 伙伴</el-menu-item>
+						<el-menu-item index="/Reward"><i class="fa fa-wa fa-cny"></i> 赞赏</el-menu-item> 
 						<el-menu-item index="/Message"><i class="fa fa-wa fa-pencil"></i> 留言板</el-menu-item>
 						<el-menu-item index="/Aboutme"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
 						<div index="" class="pcsearchbox">
@@ -60,14 +59,13 @@
 								<el-menu-item index="/Home"><i class="fa fa-wa fa-home"></i> 首页</el-menu-item>
 								<el-submenu index="/Share">
 									<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
-									<el-menu-item v-for="(item,index) in classListObj" :key="'class1'+index" :index="'/Share?classId='+item.class_id">{{item.cate_name}}</el-menu-item>
+									<el-menu-item v-for="(item,index) in classListObj" :key="'class1'+index" :index="'/Share?classId='+item.class_id">{{item.name}}</el-menu-item>
 								</el-submenu>
 								<el-submenu index="2">
 									<template slot="title"><i class="fa fa-wa fa-flask"></i> 实验室</template>
 									<el-menu-item v-for="(item,index) in projectList" :key="'class2'+index" index=""><a :href="item.nav_url" target="_blank">{{item.nav_name}}</a></el-menu-item>
 								</el-submenu>
 								<el-menu-item index="/Reward"><i class="fa fa-wa fa-cny"></i> 赞赏</el-menu-item>
-								<el-menu-item index="/Friendslink"><i class="fa fa-wa fa-users"></i> 伙伴</el-menu-item>
 								<el-menu-item index="/Message"><i class="fa fa-wa fa-pencil"></i> 留言板</el-menu-item>
 								<el-menu-item index="/Aboutme"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
 								<el-menu-item v-show="!haslogin" index="" @click="logoinFun(1)">登录</el-menu-item>
@@ -226,6 +224,7 @@ export default {
 			ArtClassData(function(msg) { //文章分类
 				// console.log(msg);
 				that.classListObj = msg;
+				console.log(that.classListObj)
 			})
 			navMenList(function(msg) { //实验室项目列表获取
 				// console.log('实验室',msg);

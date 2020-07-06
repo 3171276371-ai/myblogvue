@@ -40,10 +40,10 @@ const ArtClassData = (callback) => {
     var data = JSON.parse(sessionStorage.getItem('classList'));
     callback && callback(data)
   } else {
-    let url = portUrl + 'article/ArtClassData';
+    let url = portUrl + '/blogArticleClass/ArtClassData';
     axios.get(url).then(num => {
       // console.log(num);
-      if (num.data.code == 1001) {
+      if (num.data.code == 200) {
         sessionStorage.setItem('classList', JSON.stringify(num.data.data));
         callback && callback(num.data.data)
       } else {

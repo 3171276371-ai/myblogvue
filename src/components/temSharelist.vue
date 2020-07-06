@@ -7,7 +7,7 @@
             </div>
             <ul v-if="sonclassList" class="shareclassTwo" >
                 <li v-for="(citem,index) in sonclassList">
-                    <a :href="'#/Share?classId='+classId+'&classtwoId='+citem.class_id" :class="citem.class_id==classtwoId?'active':''">{{citem.cate_name}}</a>
+                    <a :href="'#/Share?classId='+classId+'&classtwoId='+citem.class_id" :class="citem.class_id==classtwoId?'active':''">{{JSON.parse(citem).name}}</a>
                 </li>
             </ul>
         </div>
@@ -20,7 +20,7 @@
                 <h1>
                     <a :href="'#/DetailShare?aid='+item.id" target="_blank"> 
 
-                           {{item.title}}
+                           {{shareClass}}
                     </a>
                 </h1>
                 <h2>
@@ -100,25 +100,29 @@ import {ShowArticleAll,ArtClassData,initDate} from '../utils/server.js'
             showSearchShowList:function(initpage){//展示数据
                 var that = this;
                 that.classId = (that.$route.query.classId==undefined?0:parseInt(that.$route.query.classId));//获取传参的classId
+    
                 that.keywords = that.$store.state.keywords;//获取传参的keywords
                 that.classtwoId = that.$route.query.classtwoId==undefined?'':parseInt(that.$route.query.classtwoId);//获取传参的classtwoId
                 that.sendId = that.classtwoId?that.classtwoId:that.classId;
-                that.level = that.keywords ? 0 : that.classtwoId?0:1;
-                // console.log(that.classId);
-                ArtClassData(function(msg){
-                    // console.log(msg);
+                that.level = that.keywords ? 0 : that.classtwoId?0:1;  
+                ArtClassData(function(msg){ 
                     that.shareClass = msg;
-                })
+                }) 
                 //判断当前显示的分类名称 以及子分类
-                for(var i=0;i<that.shareClass.length;i++){
-                    if(that.classId==that.shareClass[i].class_id){
-                        that.className = that.shareClass[i].cate_name;
-                        if(that.shareClass[i].ChildsSon&&that.shareClass[i].ChildsSon.length>0){
-                            that.sonclassList = that.shareClass[i].ChildsSon;
+                  
+                for(var i=0;i<that.shareClass.length;i++){   
+                    if(that.classId==that.shareClass[i].id){
+                        
+                        that.className = that.shareClass[i].name;  
+                        if(that.shareClass[i].detshare&&that.shareClass[i].detshare.length>0){
+                            that.sonclassList =  that.shareClass[i].detshare; 
                         }else{
                             that.sonclassList = '';
+                           
                         }
+                          
                     }
+                    
                 }
                 //初始化 文章id为0开始
                 that.artId = initpage ? 0 : that.artId;
