@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import Cookie from "js-cookie";
 //公共路径
 // let portUrl = "http://www.mangoya.cn/port/";
 let portUrl = "http://127.0.0.1:9002";
@@ -29,7 +30,7 @@ const UserLogin = (username, password, callback) => {
 //用户退出
 const LoginOut = (callback) => {
   let url = portUrl + '/blogAdmin/logout'
-  axios.delete(url, { headers: { Authorization: localStorage.getItem('token') }}).then(num => {
+  axios.delete(url, {   headers: { Authorization: Cookie.get("token") }}).then(num => {
     callback && callback(num.data);
   })
 }
@@ -42,7 +43,7 @@ const ArtClassData = (callback) => {
   } else {
     let url = portUrl + '/blogArticleClass/ArtClassData';
     axios.get(url).then(num => {
-      // console.log(num);
+      console.log(num);
       if (num.data.code == 200) {
         sessionStorage.setItem('classList', JSON.stringify(num.data.data));
         callback && callback(num.data.data)
@@ -73,13 +74,22 @@ const navMenList = (callback) => {
 }
 
 //查询文章列表
-const ShowArticleAll = (artId, cateId, articleName, level, callback) => {
+const ShowArticleAll = (id, classId, articleName, level, callback) => {
+  var url = null;
   if (level == 1) {
-    var url = portUrl + 'nav/ActiveClassAllData?art_id=' + artId + '&cate_id=' + cateId + '&article_name=' + articleName;
-  } else {
-    var url = portUrl + 'article/ShowArticleAll?art_id=' + artId + '&cate_id=' + cateId + '&article_name=' + articleName;
+    url = portUrl + '/blogArticle/ActiveClassAllData?art_id=' + id + '&cate_id=' + classId + '&article_name=' + articleName;
+   
+  }else if(articleName==""&&level==0){
+    url = portUrl + '/blogArticle/ActiveClassAllData?art_id=' + id + '&cate_id=' + classId;
+  }else if(articleName!=""&&level==0){
+    url = portUrl + '/blogArticle/ActiveClassAllData?art_id=' + id + '&article_name=' + articleName;
   }
+   
+   
+    // var url = portUrl + 'article/ShowArticleAll?art_id=' + id + '&cate_id=' + classId + '&article_name=' + articleName;
+  
   axios.get(url).then(num => {
+    console.log(num)
     callback && callback(num.data);
   })
 }
@@ -304,9 +314,11 @@ const initDate = (oldDate, full) => {
   var month = odate.getMonth() < 9 ? '0' + (odate.getMonth() + 1) : odate.getMonth() + 1;
   var date = odate.getDate() < 10 ? '0' + odate.getDate() : odate.getDate();
   if (full == 'all') {
-    var t = oldDate.split(" ")[0];
+     
+      var t = oldDate.split(" ")[0];
     // console.log(oldDate,t.split('-')[0],t.split('-')[1],t.split('-')[2]);
-    return t.split('-')[0] + '年' + t.split('-')[1] + '月' + t.split('-')[2] + '日';
+    return t.split('-')[0] + '年' + t.split('-')[1] + '月' + t.split('-')[2] + '日'; 
+   
   } else if (full == 'year') {
     return year
   } else if (full == 'month') {

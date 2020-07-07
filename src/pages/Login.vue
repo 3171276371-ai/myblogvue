@@ -186,11 +186,10 @@ import {getRegister,UserLogin} from '../utils/server.js'
                     UserLogin(that.username,that.password,function(msg){
                         // console.log(msg);
                         if(msg.code==200){//登录成功
-                             localStorage.setItem('userInfo',JSON.stringify(msg.data));
-                             localStorage.setItem('token',msg.data.token);  
-                            that.$cookie.set('token', msg.data.token, 1); 
-                             if(localStorage.getItem('logUrl')){
-                                 that.$router.push({path:localStorage.getItem('logUrl')});
+                             that.$cookie.set('userInfo',JSON.stringify(msg.data),1);
+                             that.$cookie.set('token',msg.data.token,1);   
+                             if(that.$cookie.get('logUrl')){
+                                 that.$router.push({path:that.$cookie.get('logUrl')});
                              }else{
                                  that.$router.push({path:'/'});
                              }
@@ -246,7 +245,8 @@ import {getRegister,UserLogin} from '../utils/server.js'
             goRegister: function(){//去注册
                 this.err2005 = false;
                 this.$router.push({path:'/Login?login=0'});
-            }
+            },
+
 
         },
         components: { //定义组件

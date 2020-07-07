@@ -400,9 +400,7 @@ const Typeit = (isAimee,emId) =>{
          ***/
          if(isAimee!=0){
              var world = "CXT";
-         }else{
-             var world = "Qinlh";
-         }
+         } 
         theater.describe("Luke", .9, emId);
         // conosle.log()
         theater.on("*", function (eventName, originalEvent, sceneName, arg) {//做点什么

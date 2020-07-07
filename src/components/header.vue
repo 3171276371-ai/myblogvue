@@ -12,10 +12,7 @@
 							<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
 							<el-menu-item v-for="(item,index) in classListObj" :key="'class1'+index" :index="'/Share?classId='+item.id">{{item.name}}</el-menu-item>
 						</el-submenu>
-						<el-submenu index="/Aboutme">
-							<template slot="title"><i class="fa fa-wa fa-flask"></i> 实验室</template>
-							<el-menu-item v-for="(item,index) in projectList" :key="'class2'+index" index=""><a :href="item.nav_url" target="_blank">{{item.nav_name}}</a></el-menu-item>
-						</el-submenu>
+						<el-menu-item index="/Message"><i class="fa fa-wa fa-pencil"></i> 我要写文章</el-menu-item>
 						<el-menu-item index="/Reward"><i class="fa fa-wa fa-cny"></i> 赞赏</el-menu-item> 
 						<el-menu-item index="/Message"><i class="fa fa-wa fa-pencil"></i> 留言板</el-menu-item>
 						<el-menu-item index="/Aboutme"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
@@ -61,10 +58,7 @@
 									<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
 									<el-menu-item v-for="(item,index) in classListObj" :key="'class1'+index" :index="'/Share?classId='+item.class_id">{{item.name}}</el-menu-item>
 								</el-submenu>
-								<el-submenu index="2">
-									<template slot="title"><i class="fa fa-wa fa-flask"></i> 实验室</template>
-									<el-menu-item v-for="(item,index) in projectList" :key="'class2'+index" index=""><a :href="item.nav_url" target="_blank">{{item.nav_name}}</a></el-menu-item>
-								</el-submenu>
+								<el-menu-item index="/Message"><i class="fa fa-wa fa-pencil"></i> 我要写文章</el-menu-item>
 								<el-menu-item index="/Reward"><i class="fa fa-wa fa-cny"></i> 赞赏</el-menu-item>
 								<el-menu-item index="/Message"><i class="fa fa-wa fa-pencil"></i> 留言板</el-menu-item>
 								<el-menu-item index="/Aboutme"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
@@ -116,6 +110,7 @@ import {
 import {
 	Typeit
 } from '../utils/plug.js'
+import Cookie from "js-cookie";
 export default {
 	 	
 	data() { //选项 / 数据
@@ -130,7 +125,7 @@ export default {
 			input: '', //input输入内容
 			headBg: 'url(static/img/headtou.jpg)', //头部背景图
 			headTou: '', //头像
-			projectList: '' //项目列表
+			 
 		}
 	},
 	watch: {
@@ -164,7 +159,7 @@ export default {
 		},
 		logoinFun: function(msg) { //用户登录和注册跳转
 			// console.log(msg);
-			localStorage.setItem('logUrl', this.$route.fullPath);
+			 this.$cookie.set('logUrl', this.$route.fullPath,1*30);
 			// console.log(666,this.$router.currentRoute.fullPath);
 			if (msg == 0) {
 				this.$router.push({
@@ -187,10 +182,10 @@ export default {
 				// console.log(that.$route.path);
 				LoginOut(function(result) {
 					//    console.log(result);
-					if (localStorage.getItem('userInfo')) {
-						localStorage.removeItem('userInfo');
-						localStorage.removeItem('token');
-						that.$cookie.delete('token',-1); 
+					if (Cookie.get('userInfo')) {
+						console.log(Cookie.get('userInfo'))
+						Cookie.remove('userInfo'); 
+						Cookie.remove('token'); 
 						that.haslogin = false;
 						//    that.$router.replace({path:that.$route.fullPath});
 						window.location.reload();
@@ -214,22 +209,17 @@ export default {
 			var that = this;
 			that.pMenu = true
 			this.activeIndex = this.$route.path == '/' ? '/Home' : this.$route.path;
-			if (localStorage.getItem('userInfo')) { //存储用户信息
+			if (Cookie.get('userInfo')) { //存储用户信息
 				that.haslogin = true;
-				that.userInfo = JSON.parse(localStorage.getItem('userInfo'));
+				that.userInfo = JSON.parse( this.$cookie.get('userInfo'));
 				// console.log(that.userInfo);
 			} else {
 				that.haslogin = false;
 			}
 			ArtClassData(function(msg) { //文章分类
 				// console.log(msg);
-				that.classListObj = msg;
-				console.log(that.classListObj)
-			})
-			navMenList(function(msg) { //实验室项目列表获取
-				// console.log('实验室',msg);
-				that.projectList = msg;
-			});
+				that.classListObj = msg; 
+			}) 
 			if ((this.$route.name == "Share" || this.$route.name == "Home") && this.$store.state.keywords) {
 				this.input = this.$store.state.keywords;
 			} else {
@@ -259,7 +249,7 @@ export default {
 			} else {
 				document.title = '被发现啦(*´∇｀*)'; //当前窗口打开
 				if (that.$route.path != '/DetailShare') {
-					if (localStorage.getItem('userInfo')) {
+					if (Cookie.get('userInfo')) {
 						that.haslogin = true;
 					} else {
 						that.haslogin = false;

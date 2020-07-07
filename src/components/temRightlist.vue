@@ -78,7 +78,7 @@
             <img :src="this.$store.state.themeObj.right_img?this.$store.state.themeObj.right_img:'static/img/scroll.png'" alt="">
         </div>
         <div v-else :class="gotoTop?'toTophui hidden':'toTophui goTophui hidden'" @click="toTopfun">
-            <img :src="this.$store.state.themeObj.right_img?this.$store.state.themeObj.right_img:'static/img/scroll.png'" alt="">
+            <img :src="this.$store.state.themeObj.right_img?this.$store.state.themeObj.right_img:'static/img/scroll.png'" alt=""  >
         </div>
     </div>
 </template>
@@ -386,7 +386,7 @@ import {ShowBrowseCount,ShowArtCommentCount,showLikeData,GetLike} from '../utils
 }
 .toTop img,.toTophui img{
     width:100%;
-    height:auto;
+    height:800px;
 }
 .toTophui{
     position: fixed;

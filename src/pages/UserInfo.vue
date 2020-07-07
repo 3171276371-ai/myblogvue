@@ -126,9 +126,9 @@ import {getUserInfo,UserInfoSave} from '../utils/server.js'//获取用户信息�
             routeChange: function(){//展示页面信息
                 var that = this;
                 // console.log(this.$router,this.$route);
-                if(localStorage.getItem('userInfo')){
+                if( this.$cookie.get('userInfo')){
                     that.haslogin = true;
-                    that.userInfo = JSON.parse(localStorage.getItem('userInfo')); 
+                    that.userInfo = JSON.parse( this.$cookie.get('userInfo')); 
                     console.log(that.userInfo)
                 }else{
                     that.haslogin = false;
