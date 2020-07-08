@@ -11,8 +11,7 @@
 						<el-submenu index="/Share">
 							<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
 							<el-menu-item v-for="(item,index) in classListObj" :key="'class1'+index" :index="'/Share?classId='+item.id">{{item.name}}</el-menu-item>
-						</el-submenu>
-						<el-menu-item index="/Message"><i class="fa fa-wa fa-pencil"></i> 我要写文章</el-menu-item>
+						</el-submenu> 
 						<el-menu-item index="/Reward"><i class="fa fa-wa fa-cny"></i> 赞赏</el-menu-item> 
 						<el-menu-item index="/Message"><i class="fa fa-wa fa-pencil"></i> 留言板</el-menu-item>
 						<el-menu-item index="/Aboutme"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
@@ -57,8 +56,7 @@
 								<el-submenu index="/Share">
 									<template slot="title"><i class="fa fa-wa fa-archive"></i> 分类</template>
 									<el-menu-item v-for="(item,index) in classListObj" :key="'class1'+index" :index="'/Share?classId='+item.class_id">{{item.name}}</el-menu-item>
-								</el-submenu>
-								<el-menu-item index="/Message"><i class="fa fa-wa fa-pencil"></i> 我要写文章</el-menu-item>
+								</el-submenu> 
 								<el-menu-item index="/Reward"><i class="fa fa-wa fa-cny"></i> 赞赏</el-menu-item>
 								<el-menu-item index="/Message"><i class="fa fa-wa fa-pencil"></i> 留言板</el-menu-item>
 								<el-menu-item index="/Aboutme"><i class="fa fa-wa fa-vcard"></i> 关于</el-menu-item>
@@ -211,13 +209,12 @@ export default {
 			this.activeIndex = this.$route.path == '/' ? '/Home' : this.$route.path;
 			if (Cookie.get('userInfo')) { //存储用户信息
 				that.haslogin = true;
-				that.userInfo = JSON.parse( this.$cookie.get('userInfo'));
+				that.userInfo = JSON.parse(this.$cookie.get('userInfo'));
 				// console.log(that.userInfo);
 			} else {
 				that.haslogin = false;
 			}
-			ArtClassData(function(msg) { //文章分类
-				// console.log(msg);
+			ArtClassData(function(msg) { //文章分类 
 				that.classListObj = msg; 
 			}) 
 			if ((this.$route.name == "Share" || this.$route.name == "Home") && this.$store.state.keywords) {

@@ -1,221 +1,245 @@
 <!-- 文章列表 -->
 <template>
-    <el-row class="sharelistBox">
-        <div v-if="this.$route.name=='Share'&&!this.$route.query.keywords" class="shareTitle">
-            <div class="ui label" >
-                <a  :href="'#/Share?classId='+classId">{{className}}</a>
-            </div>
-            <ul v-if="sonclassList" class="shareclassTwo" >
-                <li v-for="(citem,index) in sonclassList">
-                    <a :href="'#/Share?classId='+classId+'&classtwoId='+ citem.id" :class="citem.class_id==classtwoId?'active':''">{{ citem.name}}</a>
-                </li>
-            </ul>
+  <el-row class="sharelistBox">
+    <div v-if="this.$route.name=='Share'&&!this.$route.query.keywords" class="shareTitle">
+      <div class="ui label">
+        <a :href="'#/Share?classId='+classId">{{className}}</a>
+      </div>
+      <ul v-if="sonclassList" class="shareclassTwo">
+        <li v-for="(citem,index) in sonclassList">
+          <a
+            :href="'#/Share?classId='+classId+'&classtwoId='+ citem.id"
+            :class="citem.class_id==classtwoId?'active':''"
+          >{{ citem.name}}</a>
+        </li>
+      </ul>
+    </div>
+    <el-col
+      :span="24"
+      class="s-item tcommonBox"
+      v-for="(item,index) in articleList"
+      :key="'article'+index"
+    >
+      <span class="s-round-date">
+        <span class="month" v-html="showInitDate(item.createTime,'month')+'月'"></span>
+        <span class="day" v-html="showInitDate(item.updateTime,'date')"></span>
+      </span>
+      <header>
+        <h1>
+          <a :href="'#/DetailShare?aid='+item.id" target="_blank">
+            <img :src="item.image" alt class="maxW" />
+          </a>
+        </h1>
+        <h2>
+          <i class="fa fa-fw fa-user"></i>发表于
+          <i class="fa fa-fw fa-clock-o"></i>
+          <span v-html="showInitDate(item.createTime,'month')+'月'"></span> •
+          <i class="fa fa-fw fa-eye"></i>
+          {{item.browseCount}} 次围观 •
+          <i class="fa fa-fw fa-comments"></i>
+          活捉 {{item.commentCount}} 条 •
+          <span class="rateBox">
+            <i class="fa fa-fw fa-heart"></i>
+            {{item.likeCount?item.likeCount:0}}点赞 •
+            <i class="fa fa-fw fa-star"></i>
+            {{item.collectCount?item.collectCount:0}}收藏
+          </span>
+        </h2>
+        <div class="ui label">
+          <a :href="'#/Share?classId='+item.classId">{{item.cateName}}</a>
         </div>
-        <el-col :span="24" class="s-item tcommonBox" v-for="(item,index) in articleList" :key="'article'+index">
-            <span class="s-round-date">
-                <span class="month" v-html="showInitDate(item.createTime,'month')+'月'"></span>
-                <span class="day" v-html="showInitDate(item.updateTime,'date')"></span>
-            </span>
-            <header>
-                <h1>
-                    <a :href="'#/DetailShare?aid='+item.id" target="_blank"> 
-
-                           <img  :src="item.image" alt=""   class="maxW">
-                    </a>
-                </h1>
-                <h2>
-                    <i class="fa fa-fw fa-user"></i>发表于
-                    <i class="fa fa-fw fa-clock-o"></i><span v-html="showInitDate(item.createTime,'month')+'月'"> </span> •
-                    <i class="fa fa-fw fa-eye"></i>{{item.browseCount}} 次围观 •
-                    <i class="fa fa-fw fa-comments"></i>活捉 {{item.commentCount}} 条 •
-                    <span class="rateBox">
-                        <i class="fa fa-fw fa-heart"></i>{{item.likeCount?item.likeCount:0}}点赞 •
-                        <i class="fa fa-fw fa-star"></i>{{item.collectCount?item.collectCount:0}}收藏
-                    </span>
-                </h2>
-                <div class="ui label">
-                    <a :href="'#/Share?classId='+item.classId">{{item.cateName}}</a>
-                </div>
-            </header>
-            <div class="article-content">
-                <p style="text-indent:2em;">
-                    {{item.description}}
-                </p> 
-            </div>
-            <div class="viewdetail">
-                <a class="tcolors-bg" :href="'#/DetailShare?aid='+item.id" target="_blank">
-                    阅读全文>>
-                </a>
-            </div>
-        </el-col>
-        <el-col class="viewmore">
-            <a v-show="hasMore" class="tcolors-bg" href="javascript:void(0);" @click="addMoreFun">点击加载更多</a>
-            <a v-show="!hasMore" class="tcolors-bg" href="javascript:void(0);">暂无更多数据</a>
-        </el-col>
-    </el-row>
+      </header>
+      <div class="article-content">
+        <p style="text-indent:2em;">{{item.description}}</p>
+      </div>
+      <div class="viewdetail">
+        <a class="tcolors-bg" :href="'#/DetailShare?aid='+item.id" target="_blank">阅读全文>></a>
+      </div>
+    </el-col>
+    <el-col class="viewmore">
+      <a v-show="hasMore" class="tcolors-bg" href="javascript:void(0);" @click="addMoreFun">点击加载更多</a>
+      <a v-show="!hasMore" class="tcolors-bg" href="javascript:void(0);">暂无更多数据</a>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
-import {ShowArticleAll,ArtClassData,initDate} from '../utils/server.js'
-    export default {
-        name:'Share',
-        data() { //选项 / 数据
-            return {
-                imgUrl:'',
-                artId:0,
-                classId:0,
-                sendId:'',
-                className:'',
-                sonclassList:'',//二级分类
-                classtwoId:5,
-                keywords:'',
-                hasMore:true,
-                level:1,
-                shareClass:[
-                    {classId:1,name:'技术分享',detshare:[
-                        {classId:5,name:'移动端H5',pid:1},
-                        {classId:6,name:'pc端web',pid:1},
-                        {classId:7,name:'小程序',pid:1},
-                        {classId:8,name:'php',pid:1},
-                        {classId:9,name:'nodejs',pid:1},
-                        {classId:10,name:'软件',pid:1},
-                        {classId:11,name:'其他',pid:1}
-                    ]},
-                    {classId:2,name:'闲言碎语'},
-                    {classId:3,name:'事件簿'},
-                    {classId:4,name:'创作集'}
-                ],
-                queryClass:1,
-                articleList:'',
-            }
+import {
+  ShowArticleAll,
+  ArtClassData,
+  initDate,
+  getTotalCount
+} from "../utils/server.js";
+export default {
+  name: "Share",
+  data() {
+    //选项 / 数据
+    return {
+      imgUrl: "",
+      artId: 0,
+      classId: 0,
+      sendId: "",
+      className: "",
+      sonclassList: "", //二级分类
+      classtwoId: 5,
+      keywords: "",
+      hasMore: true,
+      level: 1,
+      shareClass: [
+        {
+          classId: 1,
+          name: "技术分享",
+          detshare: [
+            { classId: 5, name: "移动端H5", pid: 1 },
+            { classId: 6, name: "pc端web", pid: 1 },
+            { classId: 7, name: "小程序", pid: 1 },
+            { classId: 8, name: "php", pid: 1 },
+            { classId: 9, name: "nodejs", pid: 1 },
+            { classId: 10, name: "软件", pid: 1 },
+            { classId: 11, name: "其他", pid: 1 }
+          ]
         },
+        { classId: 2, name: "闲言碎语" },
+        { classId: 3, name: "事件簿" },
+        { classId: 4, name: "创作集" }
+      ],
+      queryClass: 1,
+      articleList: "",
+      totalCount: 0
+    };
+  },
 
-        methods: { //事件处理器
-            showInitDate: function(oldDate,full){
-                // console.log(oldDate,full);
-                return initDate(oldDate,full)
-            },
-            showSearchShowList:function(initpage){//展示数据
-                var that = this;
-                that.classId = (that.$route.query.classId==undefined?0:parseInt(that.$route.query.classId));//获取传参的classId
-    
-                that.keywords = that.$store.state.keywords;//获取传参的keywords
-                that.classtwoId = that.$route.query.classtwoId==undefined?'':parseInt(that.$route.query.classtwoId);//获取传参的classtwoId
-                that.sendId = that.classtwoId?that.classtwoId:that.classId;
-                that.level = that.keywords ? 0 : that.classtwoId?0:1;  
-                ArtClassData(function(msg){ 
-                    that.shareClass = msg;
-                }) 
-                //判断当前显示的分类名称 以及子分类
-                  
-                for(var i=0;i<that.shareClass.length;i++){   
-                    if(that.classId==that.shareClass[i].id){
-                        
-                        that.className = that.shareClass[i].name;  
-                        if(that.shareClass[i].detshare&&that.shareClass[i].detshare.length>0){
-                            that.sonclassList =  that.shareClass[i].detshare; 
-                            console.log(that.sonclassList)
-                        }else{
-                            that.sonclassList = '';
-                           
-                        }
-                          
-                    }
-                    
-                }
-                //初始化 文章id为0开始
-                that.artId = initpage ? 0 : that.artId;
-                console.log(that.artId )
-                console.log(that.level)
-                console.log(that.sendId) 
-                console.log(that.keywords) 
-                ShowArticleAll(that.artId,that.sendId,that.keywords,that.level,(result)=>{
-                    
-                    if(result.code==200){
-                        var msg = result.data;
-                        if(msg.length>0&&msg.length<10){
-                            that.hasMore = false
-                        }else{
-                            that.hasMore = true;
-                        }
-                        that.articleList = initpage ? msg : that.articleList.concat(msg);
-                        that.artId = msg[msg.length-1].id; 
-                         
-                        console.log(that.articleList)
-                    }else{
-                        that.hasMore = false;
-                        that.articleList = initpage ? [] : that.articleList;
-                    }
-                })
-               
-            },
-            addMoreFun:function(){//查看更多
-                this.showSearchShowList(false);
-            },
-            routeChange:function(){
-                var that = this;
-                this.showSearchShowList(true);
-            }
-        },
-        components: { //定义组件
+  methods: {
+    //事件处理器
+    showInitDate: function(oldDate, full) {
+      // console.log(oldDate,full);
+      return initDate(oldDate, full);
+    },
 
-        },
-        watch: {
-           // 如果路由有变化，会再次执行该方法
-           '$route':'routeChange',
-           '$store.state.keywords':'routeChange'
-         },
-        created() { //生命周期函数
-            // console.log(this.$route);
-            var that = this;
-            that.routeChange();
+    showSearchShowList: function(initpage) {
+      //展示数据
+      var that = this;
+      that.classId =
+        that.$route.query.classId == undefined
+          ? 0
+          : parseInt(that.$route.query.classId); //获取传参的classId
+
+      that.keywords = that.$store.state.keywords; //获取传参的keywords
+      that.classtwoId =
+        that.$route.query.classtwoId == undefined
+          ? ""
+          : parseInt(that.$route.query.classtwoId); //获取传参的classtwoId
+      that.sendId = that.classtwoId ? that.classtwoId : that.classId;
+      that.level = that.keywords ? 0 : that.classtwoId ? 0 : 1;
+      ArtClassData(function(msg) {
+        that.shareClass = msg;
+      });
+      //判断当前显示的分类名称 以及子分类
+
+      for (var i = 0; i < that.shareClass.length; i++) {
+        if (that.classId == that.shareClass[i].id) {
+          that.className = that.shareClass[i].name;
+          if (
+            that.shareClass[i].detshare &&
+            that.shareClass[i].detshare.length > 0
+          ) {
+            that.sonclassList = that.shareClass[i].detshare;
+          } else {
+            that.sonclassList = "";
+          }
         }
+      }
+      
+      //初始化 文章id为0开始
+      that.artId = initpage ? 1 : that.artId;
+      ShowArticleAll(
+        that.artId,
+        that.sendId,
+        that.keywords,
+        that.level,
+        result => {
+          if (result.code == 200) {
+            var msg = result.data;  
+            that.articleList = initpage ? msg.slice(0,5) : that.articleList.concat(msg.slice(5,msg.length)); 
+             if ( that.articleList.length==msg.length) {
+              that.hasMore = false;
+            } else {
+              that.hasMore = true;
+            }
+          } else {
+            that.hasMore = false;
+            that.articleList = initpage ? [] : that.articleList;
+          }
+        }
+      );
+    },
+    addMoreFun: function() {
+      //查看更多
+      this.showSearchShowList(false);
+    },
+    routeChange: function() {
+      var that = this;
+      this.showSearchShowList(true);
     }
+  },
+  components: {
+    //定义组件
+  },
+  watch: {
+    // 如果路由有变化，会再次执行该方法
+    $route: "routeChange",
+    "$store.state.keywords": "routeChange"
+  },
+  created() {
+    //生命周期函数
+    // console.log(this.$route);
+    var that = this;
+    that.routeChange();
+  }
+};
 </script>
 
 <style>
 /*分享标题*/
-.shareTitle{
-    margin-bottom: 40px;
-    position: relative;
-    border-radius: 5px;
-    background: #fff;
-    padding:15px;
+.shareTitle {
+  margin-bottom: 40px;
+  position: relative;
+  border-radius: 5px;
+  background: #fff;
+  padding: 15px;
 }
-.shareclassTwo{
-    width:100%;
+.shareclassTwo {
+  width: 100%;
 }
-.shareclassTwo li{
-    display: inline-block;
+.shareclassTwo li {
+  display: inline-block;
 }
-.shareclassTwo li a{
-    display: inline-block;
-    padding:3px 7px;
-    margin:5px 10px;
-    color:#fff;
-    border-radius: 4px;
-    background: #64609E;
-    border: 1px solid #64609E;
-    transition: transform 0.2s linear;
-    -webkit-transition: transform 0.2s linear;
+.shareclassTwo li a {
+  display: inline-block;
+  padding: 3px 7px;
+  margin: 5px 10px;
+  color: #fff;
+  border-radius: 4px;
+  background: #64609e;
+  border: 1px solid #64609e;
+  transition: transform 0.2s linear;
+  -webkit-transition: transform 0.2s linear;
 }
-.shareclassTwo li a:hover{
-    transform: translate(0,-3px);
-    -webkit-transform: translate(0,-3px);
+.shareclassTwo li a:hover {
+  transform: translate(0, -3px);
+  -webkit-transform: translate(0, -3px);
 }
-.shareclassTwo li a.active{
-    background: #fff;
-    color:#64609E;
-
+.shareclassTwo li a.active {
+  background: #fff;
+  color: #64609e;
 }
 /*文章列表*/
-    .sharelistBox{
-        transition: all 0.5s ease-out;
-        font-size: 15px;
-    }
+.sharelistBox {
+  transition: all 0.5s ease-out;
+  font-size: 15px;
+}
 
-
-    /*.sharelistBox .viewmore a:hover,.s-item .viewdetail a:hover{
+/*.sharelistBox .viewmore a:hover,.s-item .viewdetail a:hover{
         background: #48456C;
     }*/
 </style>

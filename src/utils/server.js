@@ -3,7 +3,7 @@ import axios from 'axios'
 import Cookie from "js-cookie";
 //公共路径
 // let portUrl = "http://www.mangoya.cn/port/";
-let portUrl = "http://127.0.0.1:9002";
+let portUrl = "http://121.199.73.204:9002";
 
 //用户注册
 const getRegister = (username,name, password, callback) => {
@@ -72,7 +72,7 @@ const navMenList = (callback) => {
     })
   }
 }
-
+ 
 //查询文章列表
 const ShowArticleAll = (id, classId, articleName, level, callback) => {
   var url = null;
@@ -83,13 +83,8 @@ const ShowArticleAll = (id, classId, articleName, level, callback) => {
     url = portUrl + '/blogArticle/ActiveClassAllData?art_id=' + id + '&cate_id=' + classId;
   }else if(articleName!=""&&level==0){
     url = portUrl + '/blogArticle/ActiveClassAllData?art_id=' + id + '&article_name=' + articleName;
-  }
-   
-   
-    // var url = portUrl + 'article/ShowArticleAll?art_id=' + id + '&cate_id=' + classId + '&article_name=' + articleName;
-  
-  axios.get(url).then(num => {
-    console.log(num)
+  } 
+  axios.get(url).then(num => { 
     callback && callback(num.data);
   })
 }
@@ -279,27 +274,20 @@ const getUserInfo = (userId, callback) => {
 }
 //修改用户信息
 const UserInfoSave = (obj, callback) => {
-  let url = portUrl + 'Userinfo/UserInfoSave';
-  var data = {
-    'username': obj.username,
-    'user_img': obj.avatar,
-    'email': obj.email,
-    'sex': obj.sex,
-    'friend_start': obj.state,
-    'user_id': obj.user_id,
-    'frie_name': obj.name,
-    'frie_url': obj.url,
-    'frie_description': obj.description,
-    'friend_img': obj.image,
-    'label': obj.label,
-    'head_start': obj.head_start,
-    'logo_start': obj.logo_start
-  };
+  let url = portUrl + '/blogAdmin/update';
+  
   // console.log(data);
-  axios.get(url, {
-    params: data
-  }).then(num => {
-    if (num.data.code == 1001) {
+  axios.post(url, {
+    name:obj.staffName,
+    phone:obj.phone,
+    sex:obj.sex,
+    introduce:obj.label,
+    },
+    {
+      headers: { Authorization: Cookie.get("token") }
+    }
+  ).then(num => {
+    if (num.data.code == 200) {
       callback && callback(num.data.msg);
     } else {
       alert("保存失败");
@@ -372,5 +360,5 @@ export {
   getUserInfo, //用户信息查询
   UserInfoSave, //修改用户信息
   initDate, //设置时间
-  changeTheme, //获取主题信息
+  changeTheme, //获取主题信息 
 }

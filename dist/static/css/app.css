@@ -87,7 +87,7 @@ body {
   font-family: Arial, "STHeiti", Helvetica, sans-serif;
   background: #efefef;
   font-size: 14px;
-  color: #444!important;
+  color: #444 !important;
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
@@ -124,7 +124,7 @@ h6 {
 }
 q:before,
 q:after {
-  content: '';
+  content: "";
 }
 abbr,
 acronym {
@@ -148,7 +148,7 @@ input[type="search"] {
 }
 /*************其他内容*************/
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
@@ -241,7 +241,7 @@ a {
   line-height: 24px;
 }
 .s-item .viewdetail {
-  margin: 10px 0 ;
+  margin: 10px 0;
   line-height: 24px;
   text-align: center;
 }
@@ -268,32 +268,32 @@ a {
 }
 @media screen and (max-width: 500px) {
 .dlikeColBox {
-    display: block!important;
-    float: none!important;
-    margin: 10px auto!important;
-    text-align: center!important;
+    display: block !important;
+    float: none !important;
+    margin: 10px auto !important;
+    text-align: center !important;
 }
 .el-message-box {
     max-width: 80%;
 }
 .userInfoBox .el-input,
   .userInfoBox .el-textarea {
-    max-width: 280px!important;
+    max-width: 280px !important;
 }
 .userInfoBox li {
-    padding: 15px 10px!important;
+    padding: 15px 10px !important;
 }
 .userInfoBox li .el-radio-group .el-radio {
-    margin-left: 15px!important;
+    margin-left: 15px !important;
     margin-bottom: 5px;
 }
 .tFriendsBox .tf-item a {
-    padding: 0 5px 0 60px!important;
+    padding: 0 5px 0 60px !important;
 }
 .tFriendsBox .tf-item a img {
-    width: 50px!important;
-    height: 50px!important;
-    left: 5px!important;
+    width: 50px !important;
+    height: 50px !important;
+    left: 5px !important;
 }
 }
 @media screen and (max-width: 700px) {
@@ -304,14 +304,14 @@ a {
     display: block;
 }
 .headImgBox {
-    height: 450px!important;
+    height: 450px !important;
     margin-bottom: -140px !important;
 }
 .h-information {
     display: none;
 }
 .headImgBox .scene {
-    font-size: 50px!important;
+    font-size: 50px !important;
     top: 120px;
 }
 }
@@ -325,28 +325,28 @@ a {
 }
 @media screen and (max-width: 800px) {
 .container {
-    max-width: 100%!important;
+    max-width: 100% !important;
     margin: 0 auto;
 }
 .s-round-date {
-    width: 0!important;
+    width: 0 !important;
 }
 .ui.label {
     left: -18px !important;
-    padding-left: 18px!important;
+    padding-left: 18px !important;
 }
 .ui.label::after {
-    border: none!important;
+    border: none !important;
 }
 .headBox li.el-menu-item,
   .headBox .el-submenu__title {
     padding: 0 15px;
 }
 .toTop {
-    display: none!important;
+    display: none !important;
 }
 .hidden {
-    display: none!important;
+    display: none !important;
 }
 }
 @media screen and (min-width: 801px) {
@@ -372,10 +372,10 @@ div.rightlistBox .rs2.fixed {
   color: #97dffd;
 }
 .tcolorm {
-  color: #64609E;
+  color: #64609e;
 }
 .tcolord {
-  color: #48456D;
+  color: #48456d;
 }
 .tcolors-bg {
   background: #97dffd;
@@ -383,19 +383,19 @@ div.rightlistBox .rs2.fixed {
   transition: all 0.3s ease-in-out;
 }
 .tcolord-bg {
-  background: #48456D;
+  background: #48456d;
 }
 .tcolors-bg:hover {
-  background: #48456D;
+  background: #48456d;
 }
 .paginationBox li.active {
-  background: #64609E;
+  background: #64609e;
 }
 .paginationBox li:hover {
-  color: #48456D;
+  color: #48456d;
 }
 .el-pagination button:hover {
-  color: #48456D;
+  color: #48456d;
 }
 .fitImg {
   width: 100%;
@@ -416,7 +416,7 @@ div.rightlistBox .rs2.fixed {
   float: left;
 }
 .btnone {
-  border-top: none!important;
+  border-top: none !important;
 }
 .brone {
   border-right: medium none !important;
@@ -460,12 +460,12 @@ div.rightlistBox .rs2.fixed {
 }
 .ui.label::after {
   position: absolute;
-  content: '';
+  content: "";
   top: 100%;
   left: 0;
   border-top: 0 solid transparent;
   border-right-width: 1em;
-  border-right-color: #48456D;
+  border-right-color: #48456d;
   border-right-style: solid;
   border-bottom: 1em solid transparent;
   border-left: 0 solid transparent;
@@ -476,17 +476,6 @@ div.rightlistBox .rs2.fixed {
   color: #fff;
   line-height: 100%;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1664,47 +1653,83 @@ to {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*分享标题*/
-.shareTitle{
-    margin-bottom: 40px;
-    position: relative;
-    border-radius: 5px;
-    background: #fff;
-    padding:15px;
+.shareTitle {
+  margin-bottom: 40px;
+  position: relative;
+  border-radius: 5px;
+  background: #fff;
+  padding: 15px;
 }
-.shareclassTwo{
-    width:100%;
+.shareclassTwo {
+  width: 100%;
 }
-.shareclassTwo li{
-    display: inline-block;
+.shareclassTwo li {
+  display: inline-block;
 }
-.shareclassTwo li a{
-    display: inline-block;
-    padding:3px 7px;
-    margin:5px 10px;
-    color:#fff;
-    border-radius: 4px;
-    background: #64609E;
-    border: 1px solid #64609E;
-    -webkit-transition: -webkit-transform 0.2s linear;
-    transition: -webkit-transform 0.2s linear;
-    transition: transform 0.2s linear;
-    transition: transform 0.2s linear, -webkit-transform 0.2s linear;
-    -webkit-transition: transform 0.2s linear;
+.shareclassTwo li a {
+  display: inline-block;
+  padding: 3px 7px;
+  margin: 5px 10px;
+  color: #fff;
+  border-radius: 4px;
+  background: #64609e;
+  border: 1px solid #64609e;
+  -webkit-transition: -webkit-transform 0.2s linear;
+  transition: -webkit-transform 0.2s linear;
+  transition: transform 0.2s linear;
+  transition: transform 0.2s linear, -webkit-transform 0.2s linear;
+  -webkit-transition: transform 0.2s linear;
 }
-.shareclassTwo li a:hover{
-    transform: translate(0,-3px);
-    -webkit-transform: translate(0,-3px);
+.shareclassTwo li a:hover {
+  transform: translate(0, -3px);
+  -webkit-transform: translate(0, -3px);
 }
-.shareclassTwo li a.active{
-    background: #fff;
-    color:#64609E;
+.shareclassTwo li a.active {
+  background: #fff;
+  color: #64609e;
 }
 /*文章列表*/
-.sharelistBox{
-        -webkit-transition: all 0.5s ease-out;
-        transition: all 0.5s ease-out;
-        font-size: 15px;
+.sharelistBox {
+  -webkit-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+  font-size: 15px;
 }
 /*.sharelistBox .viewmore a:hover,.s-item .viewdetail a:hover{
         background: #48456C;
@@ -1918,7 +1943,7 @@ to {
 .toTop img,
 .toTophui img {
   width: 100%;
-  height: auto;
+  height: 800px;
 }
 .toTophui {
   position: fixed;
@@ -2834,111 +2859,6 @@ to {
 
 
 
-.tFriendsBox{
-    background: #fff;
-    padding:15px;
-    border-radius: 5px;
-    margin-bottom: 40px;
-}
-.tFriendsBox h1{
-    padding:15px 0;
-    font-size: 25px;
-    font-weight: bold;
-}
-.tFriendsBox .tf-item{
-    -webkit-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-    border-radius: 5px;
-    position: relative;
-}
-.tFriendsBox .tf-item:hover{
-    background: rgba(230,244,250,.5);
-}
-.tFriendsBox .tf-item a{
-    display: block;
-    padding:0 10px 0 90px;
-    height:90px;
-}
-.tFriendsBox .tf-item a img{
-    width:60px;
-    height:60px;
-    border-radius: 50%;
-    position: absolute;
-    top:15px;
-    left:15px;
-    cursor: pointer;
-    -o-object-fit: cover;
-       object-fit: cover;
-}
-.tFriendsBox .tf-item a h4{
-    cursor: pointer;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-size: 20px;
-    padding-top:15px;
-    font-weight: bold;
-}
-.tFriendsBox .tf-item a p{
-    margin:10px 0;
-    font-size: 12px;
-    line-height: 24px;
-    color:#999;
-    cursor: pointer;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .tMSGbox section h2{
     font-weight: bold;
@@ -3015,53 +2935,6 @@ to {
 .tcommonBox p b{
     font-weight: bold;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

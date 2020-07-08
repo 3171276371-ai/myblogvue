@@ -85,6 +85,7 @@
 </template>
 
 <script>
+import Cookie from "js-cookie";
 import header from '../components/header.vue'
 import footer from '../components/footer.vue'
 import {getUserInfo,UserInfoSave} from '../utils/server.js'//获取用户信息，保存用户信息
@@ -111,13 +112,17 @@ import {getUserInfo,UserInfoSave} from '../utils/server.js'//获取用户信息�
             saveInfoFun: function(){//保存编辑的用户信息
                 var that = this;
 
-                if(!that.userInfoObj.username){ //昵称为必填
+                if(!that.userInfo.staffName){ //昵称为必填
                      that.$message.error('昵称为必填项，请填写昵称');
                      return;
                 }
               
-                UserInfoSave(that.userInfoObj,function(result){//保存信息接口，返回展示页
+              
+                UserInfoSave(that.userInfo,function(result){//保存信息接口，返回展示页
                     that.$message.success( '保存成功！');
+                    Cookie.remove('userInfo')
+                    that.$cookie.set('userInfo',result,1)
+                    console.log(result)
                     that.isEdit = false;
                     that.routeChange() ;
                 })
